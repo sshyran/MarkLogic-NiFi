@@ -60,6 +60,10 @@ First, we'll step through using the `PutMarkLogic` processor. The following are 
 ### Add PutMarkLogic Processor
 
 ## MarkLogic Query Processor
+
+### Add QueryMarkLogic Processor
+
+
 [getting-started-page]:./getting-started/
 [qconsole-user-guide]:http://docs.marklogic.com/guide/qconsole/intro
 [iot-data]:../files/IOT-Data.json.zip
