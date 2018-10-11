@@ -1,0 +1,3 @@
+main:
+    - { url: '/getting-started', text: 'Getting Started' }
+    - { absurl: 'https://github.com/marklogic/nifi', text: 'GitHub' }

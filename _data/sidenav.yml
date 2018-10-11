@@ -1,0 +1,7 @@
+main:
+  - { url: '/', text: 'Introduction' }
+  - { url: '/getting-started', text: 'Getting Started' }
+  - { url: '/step-by-step', text: 'Step-by-Step Guide' }
+  - { url: '/nifi-processors', text: 'NiFi Processors' }
+  - { url: '/cookbook-recipes', text: 'Cookbook Recipes' }
+  - { url: '/faqs', text: 'FAQs' }

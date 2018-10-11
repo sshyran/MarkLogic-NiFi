@@ -1,0 +1,5 @@
+# Site Settings
+title: 'MarkLogic NiFi Processors'
+description: 'NiFi Processors for interacting with MarkLogic'
+odh_icon: '/images/logo-marklogic.svg'
+sm_version: '1.0.0'    # latest
