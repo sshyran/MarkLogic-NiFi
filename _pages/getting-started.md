@@ -29,4 +29,4 @@ On Windows, run the `bin/run-nifi.bat` file. On Mac/\*nix systems, run from the 
 [ml-installers]:https://developer.marklogic.com/products
 [nifi-getting-started]:https://nifi.apache.org/docs/nifi-docs/html/getting-started.html#downloading-and-installing-nifi
 [nifi-downloads]:http://nifi.apache.org/download.html
-[nifi-nars-binaries]:https://github.com/marklogic/nifi-nars
+[nifi-nars-binaries]:https://github.com/marklogic/nifi/releases
