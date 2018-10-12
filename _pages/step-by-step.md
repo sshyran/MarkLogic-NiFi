@@ -42,22 +42,62 @@ For this step-by-step guide we'll be using compressed aggregate JSON data. The d
 
 Go to the NiFi interface at [http://localhost:8080/nifi](http://localhost:8080/nifi). 
 
+## Setup MarkLogicDatabaseClientService
+
+In the NiFi UI, click the <i class="fas fa-cog"> cog</i> in the lower left of the screen to configure the NiFi flow. In the new modal select the `CONTROLLER SERVICES` tab. Click the `+` button on the right and filter for the type `DefaultMarkLogicDatabaseClientService` and double-click the Controller Service Type in the table results.
+
+Now click on the <i class="fas fa-cog"> cog</i> next to our new Controller Service and go to the `PROPERTIES` tab. Now ensure MarkLogic credentials are added and the other properties are set to their expected values.
+
+Click the `APPLY` button and then select the <i class="fas fa-bolt"> lightning bolt</i> next to the Controller Service to enable it.
+
+![MarkLogic Controller Service Setup](../images/marklogic-controller-service.gif)
+
 ## MarkLogic Put Processor
 
 First, we'll step through using the `PutMarkLogic` processor. The following are detailed steps. If you'd like to skip through the detailed setup, you can import the [NiFi template][nifi-put-template] and fill in the key following key information:
 
- * Folder location of the IOT-Data.json.zip in the ListFile configuration
+ * Folder location of the `IOT-Data.json.zip` in the ListFile configuration
  * MarkLogic credentials to the DatabaseClient Service associated with the PutMarkLogic Processor
 
 ### Add ListFile Processor
 
+Drag the Processor icon next the NiFi logo into the template grid. Filter for the `ListFile` Processor click the `ADD` button.
+
+With the `ListFile` Processor on your grid, right-click the processor select <i class="fas fa-cog"> Configure</i> from the menu. On the `PROPERTIES` tab, set the **Input Directory** property the directory where `IOT-Data.json.zip` lives. If other files are in the same directory, you'll also want to set the **File Filter** to the filename `IOT-Data.json.zip` to ensure additional files aren't processed.
+
 ### Add FetchFile Processor
+
+Add the `FetchFile` processor to the grid and go to the processors configure screen. On the `SETTINGS` tab, select the check boxes to automatically terminate the `failure`, `not.found` and `permission.denied` relationships. Apply those changes.
+
+Click and hold the `ListFile` processor and drag an arrow to the `FetchFile` processor. A modal will appear with details of the new relationship you are creating. Click the `ADD` button.
 
 ### Add UnpackContent Processor
 
+Add the `UnpackContent` Processor to the grid. Configure the processor so that the `failure` and `original` relationships are automatically terminated and set the `Packaging Format` property to `zip`.
+
+Add a `success` relationship from the `FetchFile` processor to the `UnpackContent` processor.
+
 ### Add SplitText Processor
 
+Add the `SplitText` Processor to the grid. Configure the processor so that the `failure` and `original` relationships are automatically terminated and set the `Line Split Count` property to `1`.
+
+Add a `split` relationship from the `UnpackContent` processor to the `SplitText` processor.
+
 ### Add PutMarkLogic Processor
+
+Add the `PutMarkLogic` Processor to the grid. Configure the processor so that the `failure` and `success` relationships are automatically terminated. 
+
+Set the `DatabaseClient Service` to the Controller Service we created previously in [Setup MarkLogicDatabaseClientService](#setup-marklogicdatabaseclientservice).
+
+Set `Collections` to `iot-data`, `URI Prefix` to `/`, and `URI Suffix` to `.json`.
+
+For more details on the available properties, see [PutMarkLogic Processor][putmarklogic-processor].
+
+### Run Ingest
+
+Hold the `shift` key and click and drag to select all the processors on the grid. In the lower left select the <i class="fas fa-play"> Play</i> button to start ingest. 
+
+After some time to allow the data to be ingested, go back to QConsole and run the script in [Review MarkLogic Database State](#review-marklogic-database-state) to see out ingested documents.
 
 ## MarkLogic Query Processor
 
@@ -68,3 +108,4 @@ First, we'll step through using the `PutMarkLogic` processor. The following are 
 [qconsole-user-guide]:http://docs.marklogic.com/guide/qconsole/intro
 [iot-data]:../files/IOT-Data.json.zip
 [nifi-put-template]: ../files/PutMarkLogicExample.xml
+[putmarklogic-processor]:./nifi-processors/#putmarklogic-processor

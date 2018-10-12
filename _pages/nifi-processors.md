@@ -5,3 +5,6 @@ lead_text: ''
 permalink: /nifi-processors
 ---
 
+# MarkLogic Processors
+
+## PutMarkLogic Processor
