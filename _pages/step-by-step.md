@@ -81,7 +81,7 @@ Add a `success` relationship from the `FetchFile` processor to the `UnpackConten
 
 Add the `SplitText` Processor to the grid. Configure the processor so that the `failure` and `original` relationships are automatically terminated and set the `Line Split Count` property to `1`.
 
-Add a `split` relationship from the `UnpackContent` processor to the `SplitText` processor.
+Add a `success` relationship from the `UnpackContent` processor to the `SplitText` processor.
 
 ### Add PutMarkLogic Processor
 
@@ -91,21 +91,53 @@ Set the `DatabaseClient Service` to the Controller Service we created previously
 
 Set `Collections` to `iot-data`, `URI Prefix` to `/`, and `URI Suffix` to `.json`.
 
+Add a `split` relationship from the `SplitText` processor to the `SplitText` processor.
+
 For more details on the available properties, see [PutMarkLogic Processor][putmarklogic-processor].
 
 ### Run Ingest
 
 Hold the `shift` key and click and drag to select all the processors on the grid. In the lower left select the <i class="fas fa-play"> Play</i> button to start ingest. 
 
-After some time to allow the data to be ingested, go back to QConsole and run the script in [Review MarkLogic Database State](#review-marklogic-database-state) to see out ingested documents.
+After some time to allow the data to be ingested, go back to QConsole and run the script in [Review MarkLogic Database State](#review-marklogic-database-state) to see the ingested documents.
 
 ## MarkLogic Query Processor
 
+This section will cover the `QueryMarkLogic` processor. The following are detailed steps. If you'd like to skip through the detailed setup, you can import the [NiFi template][nifi-query-template] and fill in the key following key information:
+
+ * `Directory` and `Owner` properties of the `PutFile` processor
+ * MarkLogic credentials to the DatabaseClient Service associated with the `QueryMarkLogic` Processor
+
 ### Add QueryMarkLogic Processor
 
+Add the `QueryMarkLogic` Processor to the grid. Configure the processor so that the `Collections` property is set to `iot-data` and set the `DatabaseClient Service` to the Controller Service we created previously in [Setup MarkLogicDatabaseClientService](#setup-marklogicdatabaseclientservice).
+
+For more details on the available properties, see [QueryMarkLogic Processor][querymarklogic-processor].
+
+### Add UpdateAttribute Processor
+
+Add the `UpdateAttribute` Processor to the grid. This will let us place the document as direct children in the directory we are outputting to. Configure the processor by adding the `filename` property to `${filename:substringAfterLast('/')}`. The property value uses the [NiFi Expression Language][nifi-exp-lang] to trim down `filename` property of the FlowFile down to just the local name.
+
+Add a `success` relationship from the `QueryMarkLogic` processor to the `UpdateAttribute` processor.
+
+### Add PutFile Processor
+Add the `PutFile` Processor to the grid. Configure the processor so that the `failure` and `success` relationships are automatically terminated. 
+
+Set `Directory` to the desired output directory, `URI Prefix` to `/`, and `URI Suffix` to `.json`.
+
+Add a `success` relationship from the `UpdateAttribute` processor to the `PutFile` processor.
+
+### Run Export
+
+Hold the `shift` key and click and drag to select all the processors on the grid. In the lower left select the <i class="fas fa-play"> Play</i> button to start ingest. 
+
+After some time to allow the data to be exported, go to the output directory to see the exported documents.
 
 [getting-started-page]:./getting-started/
 [qconsole-user-guide]:http://docs.marklogic.com/guide/qconsole/intro
 [iot-data]:../files/IOT-Data.json.zip
 [nifi-put-template]: ../files/PutMarkLogicExample.xml
-[putmarklogic-processor]:./nifi-processors/#putmarklogic-processor
+[putmarklogic-processor]:./nifi-features/#putmarklogic-processor
+[querymarklogic-processor]:./nifi-features/#querymarklogic-processor
+[nifi-query-template]: ../files/QueryMarkLogicExample.xml
+[nifi-exp-lang]:https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html
