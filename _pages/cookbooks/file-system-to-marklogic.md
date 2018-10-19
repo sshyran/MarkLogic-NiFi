@@ -18,7 +18,7 @@ Many NiFi properties support embedded expressions, such as ${filename} in the ml
 
 ### GetFile
 
-reads files from a watched directory
+Reads files from a watched directory.
 
 **Properties**
 
