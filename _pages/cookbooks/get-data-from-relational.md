@@ -51,7 +51,7 @@ Follow the instructions at the linked dataset repository to load your data.
 
 There are about 300,000 employees in the database, so we will assume that that is too big for ExecuteSQL without paging.
 
-Run the following SQL query which will create the `employee_detail` view we will use for extracting data.
+Run the following SQL query, which will create the `employee_detail` view we will use for extracting data.
 
 ```sql
 USE employees;
