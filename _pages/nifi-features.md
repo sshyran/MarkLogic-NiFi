@@ -8,6 +8,8 @@ permalink: /nifi-features
 
 ## MarkLogicDatabaseClientService
 
+Provides a MarkLogic DatabaseClient instance for use by other processors.
+
 ### Properties
 Host
  : The host with the REST server for which a DatabaseClient instance needs to be created
@@ -42,6 +44,8 @@ Client Authentication
 # MarkLogic Processors
 
 ## PutMarkLogic Processor
+
+Write batches of FlowFiles as documents to a MarkLogic server using the MarkLogic Data Movement SDK (DMSDK).
 
 ### Properties
 
@@ -87,7 +91,12 @@ URI Prefix
 URI Suffix
  : The suffix to append to each URI.
 
+trans:*\<custom-transform-parameter\>*
+ : A dynamic parameter with the prefix of `trans:` that will be passed to the transform.
+
 ## QueryMarkLogic Processor
+
+Creates FlowFiles from batches of documents, matching the given criteria, retrieved from a MarkLogic server using the MarkLogic Data Movement SDK (DMSDK).
 
 ### Properties
 

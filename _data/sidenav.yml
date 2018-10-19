@@ -3,5 +3,11 @@ main:
   - { url: '/getting-started', text: 'Getting Started' }
   - { url: '/step-by-step', text: 'Step-by-Step Guide' }
   - { url: '/nifi-features', text: 'NiFi Features' }
-  - { url: '/cookbook-recipes', text: 'Cookbook Recipes' }
+  - { url: '/cookbook-recipes', text: 'Cookbook Recipes',
+      childPages: [
+        { url: '/get-data-from-a-relational-database', text: 'Relational Database' },
+        { url: '/file-system-to-marklogic', text: 'File System to MarkLogic'},
+        { url: '/run-data-hub-input-flow', text: 'Run Data Hub Input Flow'}
+      ]
+    }
   - { url: '/faqs', text: 'FAQs' }
