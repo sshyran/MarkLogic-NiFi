@@ -9,7 +9,7 @@ permalink: /cookbook-recipes
 
 ## [Relational Database][relational-database]
 
-Pull data into MarkLogic from a relational database source as JSON documents.
+Pull data from a relational database source and write into MarkLogic as JSON documents.
 
 [Read More][relational-database]
 
