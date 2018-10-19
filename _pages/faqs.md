@@ -4,4 +4,6 @@ title: Frequently Asked Questions
 permalink: /faqs
 ---
 
-### The following are frequently asked questions:
+[Apache NiFi FAQs][apache-faqs]
+
+[apache-faqs]: https://cwiki.apache.org/confluence/display/NIFI/FAQs
