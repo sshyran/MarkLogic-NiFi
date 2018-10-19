@@ -7,7 +7,7 @@ permalink: /run-data-hub-input-flow
 
 # Run Data Hub Input Flow
 
-This template demonstrates how to ingest a document and transform with a Data Hub Framework input flow.
+This template demonstrates how to ingest a document and transform it with a Data Hub Framework input flow.
 
 This uses the [Data Hub Framework online store example][online-store-dhf-example] as the basis for the template. 
 

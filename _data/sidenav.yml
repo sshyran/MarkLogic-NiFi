@@ -5,7 +5,7 @@ main:
   - { url: '/nifi-features', text: 'NiFi Features' }
   - { url: '/cookbook-recipes', text: 'Cookbook Recipes',
       childPages: [
-        { url: '/get-data-from-a-relational-database', text: 'Relational Database' },
+        { url: '/get-data-from-a-relational-database', text: 'Relational Database to MarkLogic' },
         { url: '/file-system-to-marklogic', text: 'File System to MarkLogic'},
         { url: '/run-data-hub-input-flow', text: 'Run Data Hub Input Flow'}
       ]

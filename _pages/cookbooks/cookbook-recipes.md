@@ -9,7 +9,7 @@ permalink: /cookbook-recipes
 
 ## [Relational Database][relational-database]
 
-Pull data into MarkLogic from a relational database source as JSON documents.
+Pull data from a relational database source and write into MarkLogic as JSON documents.
 
 [Read More][relational-database]
 
@@ -21,7 +21,7 @@ Pull data into MarkLogic from a file system directory.
 
 ## [Data Hub Input Flow][dhf-input-flow]
 
-Use the `Server Transform` property and dynamic `trans:*` properties to run a Data Hub Input Flow transform against the input documents.
+Use a [MarkLogic Data Hub](https://github.com/marklogic/marklogic-data-hub) Input Flow to transform documents while loading.
 
 [Read More][dhf-input-flow]
 

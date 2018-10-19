@@ -7,7 +7,7 @@ permalink: /file-system-to-marklogic
 
 # File System to MarkLogic
 
-This example watches a directory for files, imports them into MarkLogic, then deletes them. The MarkLogic URI is /files/ followed by the filename. The NiFi filename property is set by the GetFile processor. 
+This example watches a directory for files, imports them into MarkLogic, then deletes them from the file system. The MarkLogic URI is `/files/` followed by the filename. The NiFi filename property is set by the `GetFile` processor. 
 
 Many NiFi properties support embedded expressions, such as ${filename} in the ml.uri property below. For more about expressions, see [Apache NiFi Expression Language Guide.][nifi-exp-lang]
 
@@ -18,7 +18,7 @@ Many NiFi properties support embedded expressions, such as ${filename} in the ml
 
 ### GetFile
 
-reads files from a watched directory
+Reads files from a watched directory.
 
 **Properties**
 
