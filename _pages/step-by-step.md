@@ -133,7 +133,7 @@ Hold the `shift` key and click and drag to select all the processors on the grid
 
 After some time to allow the data to be exported, go to the output directory to see the exported documents.
 
-[getting-started-page]:./getting-started/
+[getting-started-page]:./getting-started
 [qconsole-user-guide]:http://docs.marklogic.com/guide/qconsole/intro
 [iot-data]:../files/IOT-Data.json.zip
 [nifi-put-template]: ../files/PutMarkLogicExample.xml
