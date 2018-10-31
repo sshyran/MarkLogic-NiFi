@@ -112,7 +112,21 @@ Thread Count
 Consistent Snapshot
  : Boolean used to indicate that the matching documents were retrieved from a consistent snapshot.
 
+Query
+ : The query criteria for retrieving documents that corresponds with the `Query Type` selected.
+
+Query Type
+ : The type of query contained in the `Query` property. Available query types:
+ * **Collection Query** Comma-separated list of collections to query from a MarkLogic server.
+ * **Combined Query (JSON)** Combine a string or structured query with dynamic query options (Allows JSON serialized cts queries). See [documentation for more details][combined-query].
+ * **Combined Query (XML)** Combine a string or structured query with dynamic query options (Allows XML serialized cts queries). See [documentation for more details][combined-query].
+ * **String Query** A Google-style query string to search documents and metadata. See [documentation for more details][string-query].
+ * **Structured Query (JSON)** A simple and easy way to construct queries as a JSON structure, allowing you to manipulate complex queries.  See [documentation for more details][structured-query].
+ * **Structured Query (XML)** A simple and easy way to construct queries as a XML structure, allowing you to manipulate complex queries. See [documentation for more details][structured-query].
+
 Collections
- : Comma-separated list of collections to query from a MarkLogic server.
+ : **DEPRECATED use Query Type `Collection Query` with Query instead** Comma-separated list of collections to query from a MarkLogic server.
 
-
+[string-query]: https://docs.marklogic.com/guide/java/searches#id_80640
+[structured-query]: https://docs.marklogic.com/guide/java/searches#id_70572
+[combined-query]: https://docs.marklogic.com/guide/java/searches#id_76144
