@@ -135,9 +135,9 @@ After some time to allow the data to be exported, go to the output directory to 
 
 [getting-started-page]:./getting-started
 [qconsole-user-guide]:http://docs.marklogic.com/guide/qconsole/intro
-[iot-data]:../files/IOT-Data.json.zip
-[nifi-put-template]: ../files/PutMarkLogicExample.xml
-[putmarklogic-processor]:./nifi-features/#putmarklogic-processor
-[querymarklogic-processor]:./nifi-features/#querymarklogic-processor
-[nifi-query-template]: ../files/QueryMarkLogicExample.xml
+[iot-data]: ./files/IOT-Data.json.zip
+[nifi-put-template]: ./files/PutMarkLogicExample.xml
+[putmarklogic-processor]: ./nifi-features#putmarklogic-processor
+[querymarklogic-processor]: ./nifi-features#querymarklogic-processor
+[nifi-query-template]: ./files/QueryMarkLogicExample.xml
 [nifi-exp-lang]:https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html
