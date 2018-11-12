@@ -464,7 +464,7 @@ This repository contains the historical records for each Flow File. This is basi
 
 Data in this repository is updated frequently and results in a lot of disk I/O. As such, you can significantly increase performance and durability by spitting the repository into multiple repositories. See [Content Repository](#_Content_Repository) for information on how to accomplish this. Additionally, updating the _nifi.provenance.repository.implementation_ setting in the nifi.properties file to use the <font face="Courier New, serif">org.apache.nifi.provenance.WriteAheadProvenanceRepository</font> instead of the default PersistentProvenanceRepository.
 
-When switching to the WriteAheadProvenanceRepository you may wish to consider additional changes to the nifi.properties as outlined in the [Hortonworks DataFlow Documentation](https://docs.hortonworks.com/HDPDocuments/HDF3/HDF-3.1.1/bk_user-guide/content/system-properties.html).
+When switching to the WriteAheadProvenanceRepository, you may wish to consider additional changes to the nifi.properties as outlined in the [Hortonworks DataFlow Documentation](https://docs.hortonworks.com/HDPDocuments/HDF3/HDF-3.1.1/bk_user-guide/content/system-properties.html).
 
 # <a name="__RefHeading__796_1654017897"></a><a name="_Toc528406982"></a>NiFi Clustering
 
