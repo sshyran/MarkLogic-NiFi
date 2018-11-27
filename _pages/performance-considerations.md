@@ -50,6 +50,8 @@ Note: the vast majority of this information can be found by searching the web fo
 
 **[Tips & Tricks](#__RefHeading__800_1654017897)**
 
+  * **[Assigning Threads to NiFi](#assigning-threads-to-nifi)**
+
   * **[Avoid Unnecessary File Modifications](#__RefHeading__802_1654017897)**
 
   * **[Dataflow Optimization](#__RefHeading__804_1654017897)**
@@ -491,6 +493,11 @@ Clustering in NiFi is accomplished by using ZooKeeper. NiFi comes with and embed
 *   See _Figure_ 1 _- Data Distribution in NiFi Cluster_ in the [Screen Shots](#_Screen_Shots) section for a representation of distributing data across a NiFi clustered environment. In the screen shot, you’ll notice a DistributeLoad processor distributing unique flow files to each of the three HTTPInvoke processors. Each one is responsible for sending data from the Primary node to all other nodes within the cluster (including the Primary node) Note that the DistributeLoad and InvokeHTTP processors only run on the Primary node. The single ListenHTTP processor runs on all three nodes (including the Primary) and receives the data sent from the Primary.
 
 # <a name="__RefHeading__800_1654017897"></a><a name="_Toc528406984"></a>Tips & Tricks
+
+## Assigning Threads to NiFi
+
+When you initially set up NiFi, there is a default number of threads assigned to the host. Specifically, *Maximum Timer Driven Thread Count* and *Maximum Event Driven Thread Count*. These settings can be found by clicking the hamburger menu at the top right and selecting *Controller Settings*. On the *General* tab you’ll see the two aforementioned settings. Typically, you can leave the *Max Event Driven Thread Count* setting at 5 since the vast majority of processors are Timer Driven. For the *Max Timer Driven Thread Count* you’ll want to set this value between 2 – 4 times the number of cores your host has. So, if your host has 30 cores you can set the value to be between 60 & 120.
+These setting configure the maximum number of threads that can be utilized by NiFi across all processors. So, as an example if you set the number of concurrent tasks for a given processor (i.e. 5) when that processor executes it will consume 5 threads of the total allotted for NiFi. All processors will cumulatively consume threads when they execute. Keep in mind that regardless of how many concurrent tasks are configured for all processors, the total concurrent tasks cannot exceed the total number of threads assigned. By increasing the threads as described above, you can dramatically increase NiFi throughput.
 
 ## <a name="__RefHeading__802_1654017897"></a><a name="_Toc528406985"></a>Avoid Unnecessary File Modifications
 
