@@ -10,5 +10,6 @@ main:
         { url: '/run-data-hub-input-flow', text: 'Run Data Hub Input Flow'}
       ]
     }
+  - { url: '/error-resolutions', text: 'Error Resolutions' }
   - { url: '/performance-considerations', text: 'Performance Considerations' }
   - { url: '/faqs', text: 'FAQs' }
