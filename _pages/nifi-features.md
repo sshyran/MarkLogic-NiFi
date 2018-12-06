@@ -47,6 +47,20 @@ Client Authentication
 
 Write batches of FlowFiles as documents to a MarkLogic server using the MarkLogic Data Movement SDK (DMSDK).
 
+### Relationships
+
+#### success
+
+FlowFiles that have been written successfully to MarkLogic are passed to this relationship.
+
+#### batch_success
+
+A FlowFile is created and written to this relationship for each batch. The FlowFile has an attribute of URIs, which is a comma-separated list of URIs successfully written in a batch. This can assist with post-batch processing.
+
+#### failure
+
+FlowFiles that have failed to be written to MarkLogic are passed to this relationship.
+
 ### Properties
 
 DatabaseClient Service
@@ -59,7 +73,7 @@ Thread Count
  : The number of threads - sets the thread count on the Batcher.
 
 Collections
- : Comma-delimited sequence of collections to add to each document.
+ : Comma-delimited sequence of collections to add to each document. **Expression Language Enabled: FlowFile Scope**
 
 Format
  : Format for each document; if not specified, MarkLogic will determine the format based on the URI.
@@ -92,11 +106,21 @@ URI Suffix
  : The suffix to append to each URI.
 
 trans:*\<custom-transform-parameter\>*
- : A dynamic parameter with the prefix of `trans:` that will be passed to the transform.
+ : A dynamic parameter with the prefix of `trans:` that will be passed to the transform. **Expression Language Enabled: Variable Scope**
 
 ## QueryMarkLogic Processor
 
 Creates FlowFiles from batches of documents, matching the given criteria, retrieved from a MarkLogic server using the MarkLogic Data Movement SDK (DMSDK).
+
+This allows an input which can used in the `Query` property with the NiFi Expression Language.
+
+#### success
+
+FlowFiles are generated for each document URI read out of MarkLogic.
+
+#### failure
+
+If a query fails a FlowFile goes to the failure relationship. If an input is provided to the QueryMarkLogic processor, the input FlowFile is penalized and passed. Otherwise a new FlowFile is generated and passed.
 
 ### Properties
 
@@ -113,7 +137,7 @@ Consistent Snapshot
  : Boolean used to indicate that the matching documents were retrieved from a consistent snapshot.
 
 Query
- : The query criteria for retrieving documents that corresponds with the `Query Type` selected.
+ : The query criteria for retrieving documents that corresponds with the `Query Type` selected. **Expression Language Enabled: FlowFile Scope**
 
 Query Type
  : The type of query contained in the `Query` property. Available query types:
@@ -132,7 +156,7 @@ Return Type
  * **Metadata** Adds metadata with the `meta:` prefix and properties with the `property:` prefix to the FlowFile attributes.
 
 Collections
- : **DEPRECATED use Query Type `Collection Query` with Query instead** Comma-separated list of collections to query from a MarkLogic server.
+ : **DEPRECATED use Query Type `Collection Query` with Query instead.** Comma-separated list of collections to query from a MarkLogic server.
 
 [string-query]: https://docs.marklogic.com/guide/java/searches#id_80640
 [structured-query]: https://docs.marklogic.com/guide/java/searches#id_70572
