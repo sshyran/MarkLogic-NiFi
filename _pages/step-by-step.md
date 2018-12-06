@@ -112,6 +112,44 @@ This section will cover the `QueryMarkLogic` processor. The following are detail
 
 Add the `QueryMarkLogic` Processor to the grid. Configure the processor so that the `Query Type` property is set to `Collection Query`, the `Query` property to `iot-data`, and set the `DatabaseClient Service` to the Controller Service we created previously in [Setup MarkLogicDatabaseClientService](#setup-marklogicdatabaseclientservice).
 
+#### Different Query Approaches
+
+There are other `Query Type` options that can be used. Below are examples of `Query` property values for each of those `Query Type` options. See [Additional Query Templates](#additional-query-templates) for templates with the different approaches.
+
+##### Combined Query (JSON)
+```javascript
+{ "ctsquery": { "collectionQuery": { "uris": ["iot-data"] } } }
+```
+##### Combined Query (XML)
+```xml
+&lt;cts:collection-query xmlns:cts="http://marklogic.com/cts"&gt;
+  &lt;cts:uri&gt;iot-data&lt;/cts:uri&gt;
+&lt;/cts:collection-query&gt;
+```
+##### String Query
+
+`Refrigerator`
+
+##### Structured Query (JSON)
+```javascript
+{
+  "query": {
+    "queries": [{
+      "collection-query": {
+        "uri": ["iot-data"]
+      }
+    }]
+  }
+}
+```
+##### Structured Query (XML)
+```xml
+&lt;query xmlns="http://marklogic.com/appservices/search"&gt;
+  &lt;collection-query&gt;
+    &lt;uri&gt;iot-data&lt;/uri&gt;
+  &lt;/collection-query&gt;
+&lt;/query&gt;
+```
 For more details on the available properties, see [QueryMarkLogic Processor][querymarklogic-processor].
 
 ### Add UpdateAttribute Processor
@@ -133,6 +171,14 @@ Hold the `shift` key and click and drag to select all the processors on the grid
 
 After some time to allow the data to be exported, go to the output directory to see the exported documents.
 
+### Additional Query Templates
+
+ * [Structured XML Query Template][structured-xml-query-template]
+ * [Structured JSON Query Template][structured-json-query-template]
+ * [Combined XML Query Template][combined-xml-query-template]
+ * [Combined JSON Query Template][combined-json-query-template]
+ * [String Query Template][string-query-template]
+
 [getting-started-page]:./getting-started
 [qconsole-user-guide]:http://docs.marklogic.com/guide/qconsole/intro
 [iot-data]: ./files/IOT-Data.json.zip
@@ -140,4 +186,9 @@ After some time to allow the data to be exported, go to the output directory to 
 [putmarklogic-processor]: ./nifi-features#putmarklogic-processor
 [querymarklogic-processor]: ./nifi-features#querymarklogic-processor
 [nifi-query-template]: ./files/QueryMarkLogicExample.xml
+[structured-xml-query-template]: ./files/QueryMarkLogicExampleStructuredXML.xml
+[structured-json-query-template]: ./files/QueryMarkLogicExampleStructuredJSON.xml
+[combined-xml-query-template]: ./files/QueryMarkLogicExampleCombinedXML.xml
+[combined-json-query-template]: ./files/QueryMarkLogicExampleCombinedJSON.xml
+[string-query-template]: ./files/QueryMarkLogicExampleString.xml
 [nifi-exp-lang]:https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html
