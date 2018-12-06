@@ -124,6 +124,13 @@ Query Type
  * **Structured Query (JSON)** A simple and easy way to construct queries as a JSON structure, allowing you to manipulate complex queries.  See [documentation for more details][structured-query].
  * **Structured Query (XML)** A simple and easy way to construct queries as a XML structure, allowing you to manipulate complex queries. See [documentation for more details][structured-query].
 
+Return Type
+ : The type of data that is returned. Default: `Documents` Available return types:
+ * **URIs Only** Passes FlowFiles with just `filename` attribute with the matching document URIs.
+ * **Documents** Adds document in FlowFile content.
+ * **Documents + Metadata** Adds document in FlowFile content and adds metadata with the `meta:` prefix and properties with the `property:` prefix to the FlowFile attributes.
+ * **Metadata** Adds metadata with the `meta:` prefix and properties with the `property:` prefix to the FlowFile attributes.
+
 Collections
  : **DEPRECATED use Query Type `Collection Query` with Query instead** Comma-separated list of collections to query from a MarkLogic server.
 

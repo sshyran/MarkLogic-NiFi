@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <template encoding-version="1.2">
-    <description>This example shows how to the QueryMarkLogic processor.</description>
+    <description></description>
     <groupId>b8f85592-0166-1000-de47-efc67ed2bc1f</groupId>
-    <name>QueryMarkLogicExample</name>
+    <name>QueryMarkLogicExampleCombinedXML</name>
     <snippet>
         <connections>
             <id>b3b91f20-280f-36bb-0000-000000000000</id>
@@ -431,11 +431,13 @@
                     </entry>
                     <entry>
                         <key>Query</key>
-                        <value>iot-data</value>
+                        <value>&lt;cts:collection-query xmlns:cts="http://marklogic.com/cts"&gt;
+  &lt;cts:uri&gt;iot-data&lt;/cts:uri&gt;
+&lt;/cts:collection-query&gt;</value>
                     </entry>
                     <entry>
                         <key>Query Type</key>
-                        <value>Collection Query</value>
+                        <value>Combined Query (XML)</value>
                     </entry>
                     <entry>
                         <key>Return Type</key>
@@ -587,5 +589,5 @@
             <type>org.apache.nifi.processors.standard.PutFile</type>
         </processors>
     </snippet>
-    <timestamp>12/05/2018 20:57:27 PST</timestamp>
+    <timestamp>12/05/2018 22:28:57 PST</timestamp>
 </template>

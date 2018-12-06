@@ -25,6 +25,14 @@ Use a [MarkLogic Data Hub](https://github.com/marklogic/marklogic-data-hub) Inpu
 
 [Read More][dhf-input-flow]
 
+## [Query MarkLogic][query-flow]
+
+Extract documents from MarkLogic. See templates using various query types [here][query-flow-templates].
+
+[Read More][query-flow]
+
 [relational-database]:./get-data-from-a-relational-database
 [file-system]:./file-system-to-marklogic
 [dhf-input-flow]:./run-data-hub-input-flow
+[query-flow]:./step-by-step#add-querymarklogic-processor
+[query-flow-templates]:./step-by-step#additional-query-templates
