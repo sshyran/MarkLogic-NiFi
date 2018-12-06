@@ -122,9 +122,9 @@ There are other `Query Type` options that can be used. Below are examples of `Qu
 ```
 ##### Combined Query (XML)
 ```xml
-&lt;cts:collection-query xmlns:cts="http://marklogic.com/cts"&gt;
-  &lt;cts:uri&gt;iot-data&lt;/cts:uri&gt;
-&lt;/cts:collection-query&gt;
+<cts:collection-query xmlns:cts="http://marklogic.com/cts">
+  <cts:uri>iot-data</cts:uri>
+</cts:collection-query>
 ```
 ##### String Query
 
@@ -144,11 +144,11 @@ There are other `Query Type` options that can be used. Below are examples of `Qu
 ```
 ##### Structured Query (XML)
 ```xml
-&lt;query xmlns="http://marklogic.com/appservices/search"&gt;
-  &lt;collection-query&gt;
-    &lt;uri&gt;iot-data&lt;/uri&gt;
-  &lt;/collection-query&gt;
-&lt;/query&gt;
+<query xmlns="http://marklogic.com/appservices/search">
+  <collection-query>
+    <uri>iot-data</uri>
+  </collection-query>
+</query>
 ```
 For more details on the available properties, see [QueryMarkLogic Processor][querymarklogic-processor].
 
