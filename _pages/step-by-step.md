@@ -110,7 +110,7 @@ This section will cover the `QueryMarkLogic` processor. The following are detail
 
 ### Add QueryMarkLogic Processor
 
-Add the `QueryMarkLogic` Processor to the grid. Configure the processor so that the `Collections` property is set to `iot-data` and set the `DatabaseClient Service` to the Controller Service we created previously in [Setup MarkLogicDatabaseClientService](#setup-marklogicdatabaseclientservice).
+Add the `QueryMarkLogic` Processor to the grid. Configure the processor so that the `Query Type` property is set to `Collection Query`, the `Query` property to `iot-data`, and set the `DatabaseClient Service` to the Controller Service we created previously in [Setup MarkLogicDatabaseClientService](#setup-marklogicdatabaseclientservice).
 
 For more details on the available properties, see [QueryMarkLogic Processor][querymarklogic-processor].
 
