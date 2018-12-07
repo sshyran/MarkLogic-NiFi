@@ -412,15 +412,15 @@
                         </value>
                     </entry>
                     <entry>
-                        <key>Batch size</key>
+                        <key>Batch Size</key>
                         <value>
-                            <name>Batch size</name>
+                            <name>Batch Size</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>Thread count</key>
+                        <key>Thread Count</key>
                         <value>
-                            <name>Thread count</name>
+                            <name>Thread Count</name>
                         </value>
                     </entry>
                     <entry>
@@ -448,9 +448,9 @@
                         </value>
                     </entry>
                     <entry>
-                        <key>MIME type</key>
+                        <key>MIME Type</key>
                         <value>
-                            <name>MIME type</name>
+                            <name>MIME Type</name>
                         </value>
                     </entry>
                     <entry>
@@ -460,33 +460,33 @@
                         </value>
                     </entry>
                     <entry>
-                        <key>Server transform</key>
+                        <key>Server Transform</key>
                         <value>
-                            <name>Server transform</name>
+                            <name>Server Transform</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>Temporal collection</key>
+                        <key>Temporal Collection</key>
                         <value>
-                            <name>Temporal collection</name>
+                            <name>Temporal Collection</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>URI attribute name</key>
+                        <key>URI Attribute Name</key>
                         <value>
-                            <name>URI attribute name</name>
+                            <name>URI Attribute Name</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>URI prefix</key>
+                        <key>URI Prefix</key>
                         <value>
-                            <name>URI prefix</name>
+                            <name>URI Prefix</name>
                         </value>
                     </entry>
                     <entry>
-                        <key>URI suffix</key>
+                        <key>URI Suffix</key>
                         <value>
-                            <name>URI suffix</name>
+                            <name>URI Suffix</name>
                         </value>
                     </entry>
                 </descriptors>
@@ -499,11 +499,11 @@
                         <value>022a4d3d-1ff4-34e2-0000-000000000000</value>
                     </entry>
                     <entry>
-                        <key>Batch size</key>
+                        <key>Batch Size</key>
                         <value>5</value>
                     </entry>
                     <entry>
-                        <key>Thread count</key>
+                        <key>Thread Count</key>
                         <value>3</value>
                     </entry>
                     <entry>
@@ -520,28 +520,28 @@
                         <key>Job Name</key>
                     </entry>
                     <entry>
-                        <key>MIME type</key>
+                        <key>MIME Type</key>
                     </entry>
                     <entry>
                         <key>Permissions</key>
                         <value>rest-reader,read,rest-writer,update</value>
                     </entry>
                     <entry>
-                        <key>Server transform</key>
+                        <key>Server Transform</key>
                     </entry>
                     <entry>
-                        <key>Temporal collection</key>
+                        <key>Temporal Collection</key>
                     </entry>
                     <entry>
-                        <key>URI attribute name</key>
+                        <key>URI Attribute Name</key>
                         <value>uuid</value>
                     </entry>
                     <entry>
-                        <key>URI prefix</key>
+                        <key>URI Prefix</key>
                         <value>/iot/</value>
                     </entry>
                     <entry>
-                        <key>URI suffix</key>
+                        <key>URI Suffix</key>
                         <value>.json</value>
                     </entry>
                 </properties>
@@ -555,6 +555,10 @@
             <relationships>
                 <autoTerminate>true</autoTerminate>
                 <name>failure</name>
+            </relationships>
+            <relationships>
+                <autoTerminate>true</autoTerminate>
+                <name>batch_success</name>
             </relationships>
             <relationships>
                 <autoTerminate>true</autoTerminate>
