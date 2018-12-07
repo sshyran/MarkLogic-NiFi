@@ -114,6 +114,8 @@ Creates FlowFiles from batches of documents, matching the given criteria, retrie
 
 This allows an input which can used in the `Query` property with the NiFi Expression Language.
 
+### Relationships
+
 #### success
 
 FlowFiles are generated for each document URI read out of MarkLogic.
