@@ -91,7 +91,7 @@ Set the `DatabaseClient Service` to the Controller Service we created previously
 
 Set `Collections` to `iot-data`, `URI Prefix` to `/`, and `URI Suffix` to `.json`.
 
-Add a `split` relationship from the `SplitText` processor to the `SplitText` processor.
+Add a `split` relationship from the `SplitText` processor to the `PutMarkLogic` processor.
 
 For more details on the available properties, see [PutMarkLogic Processor][putmarklogic-processor].
 

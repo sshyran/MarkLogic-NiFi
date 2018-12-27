@@ -31,8 +31,15 @@ Extract documents from MarkLogic. See templates using various query types [here]
 
 [Read More][query-flow]
 
+## [Bulk Record Insert Into MarkLogic][bulk-record-insert-into-marklogic]
+
+Insert data into MarkLogic in bulk with using `PutMarkLogicRecord` with Record Readers and Record Writers.
+
+[Read More][bulk-record-insert-into-marklogic]
+
 [relational-database]:./get-data-from-a-relational-database
 [file-system]:./file-system-to-marklogic
 [dhf-input-flow]:./run-data-hub-input-flow
 [query-flow]:./step-by-step#add-querymarklogic-processor
 [query-flow-templates]:./step-by-step#additional-query-templates
+[bulk-record-insert-into-marklogic]:./bulk-record-insert-into-marklogic
