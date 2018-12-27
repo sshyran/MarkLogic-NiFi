@@ -6,6 +6,9 @@ permalink: /bulk-record-insert-into-marklogic
 ---
 
 # Bulk Record Insert Into MarkLogic
+
+For this example we'll be using compressed aggregate JSON data. The data is a mock-up of IoT power data from different devices. The data can be downloaded [here][iot-data]. 
+
 If you'd like to skip through the detailed setup, you can import the [NiFi template][nifi-put-template] and fill in the key following key information:
 
  * Folder location of the `IOT-Data.json.zip` in the ListFile configuration
