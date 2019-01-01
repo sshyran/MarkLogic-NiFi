@@ -16,4 +16,14 @@ We use a version pattern that mimics the version of NiFi that a MarkLogic NiFi B
 
 As far as the NiFi API compatibility between versions allows, the latest `<NiFi Version>.x` NiFi bundles will have a common code-base and functionality.
 
+### I've encountered an issue. How do I resolve it?
+
+First, be sure to look over the ["Error Resolutions" page][error-resolutions] to find common solutions. If the issue remains unsolved, you can open an issue in the [GitHub issue tracker][github-issue-tracker].
+
+### What version of MarkLogic do I need?
+
+The MarkLogic NiFi bundle requires MarkLogic 9.
+
+[error-resolutions]: ./error-resolutions
 [apache-faqs]: https://cwiki.apache.org/confluence/display/NIFI/FAQs
+[github-issue-tracker]: https://github.com/marklogic/nifi/issues
