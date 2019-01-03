@@ -87,6 +87,15 @@ Apply Result Type
  * **Replace** Overwrites documents with the value returned by the transform, just like REST write transforms. This is the default behavior.
  * **Ignore** Run the transform on each document, but ignore the value returned by the transform because the transform will do any necessary database modifications or other processing. For example, a transform might call out to an external REST service or perhaps write multiple additional documents.
 
+State Index
+ : Definition of the index which will be used to keep state to restrict future calls. *Currently only supports xs:dateTime indexes.*
+
+State Index Type
+ : Type of index to determine state for next set of documents.
+ * **Element Index** Index on an element. (Namespaces can be defined with dynamic properties prefixed with 'ns:'.)
+ * **JSON Property Index** Index on a JSON property.
+ * **Path Index** Index on a Path. (Namespaces can be defined with dynamic properties prefixed with 'ns:'.)
+
 Server Transform
  : The name of REST server transform to apply to every document as it's written.
 
@@ -131,6 +140,15 @@ Query Type
  * **String Query** A Google-style query string to search documents and metadata. See [documentation for more details][string-query].
  * **Structured Query (JSON)** A simple and easy way to construct queries as a JSON structure, allowing you to manipulate complex queries.  See [documentation for more details][structured-query].
  * **Structured Query (XML)** A simple and easy way to construct queries as a XML structure, allowing you to manipulate complex queries. See [documentation for more details][structured-query].
+
+State Index
+ : Definition of the index which will be used to keep state to restrict future calls. *Currently only supports xs:dateTime indexes.*
+
+State Index Type
+ : Type of index to determine state for next set of documents.
+ * **Element Index** Index on an element. (Namespaces can be defined with dynamic properties prefixed with 'ns:'.)
+ * **JSON Property Index** Index on a JSON property.
+ * **Path Index** Index on a Path. (Namespaces can be defined with dynamic properties prefixed with 'ns:'.)
 
 ## ExecuteScriptMarkLogic Processor
 
@@ -430,6 +448,15 @@ Return Type
  * **Documents** Adds document in FlowFile content.
  * **Documents + Metadata** Adds document in FlowFile content and adds metadata with the `meta:` prefix and properties with the `property:` prefix to the FlowFile attributes.
  * **Metadata** Adds metadata with the `meta:` prefix and properties with the `property:` prefix to the FlowFile attributes.
+
+State Index
+ : Definition of the index which will be used to keep state to restrict future calls. *Currently only supports xs:dateTime indexes.*
+
+State Index Type
+ : Type of index to determine state for next set of documents.
+ * **Element Index** Index on an element. (Namespaces can be defined with dynamic properties prefixed with 'ns:'.)
+ * **JSON Property Index** Index on a JSON property.
+ * **Path Index** Index on a Path. (Namespaces can be defined with dynamic properties prefixed with 'ns:'.)
 
 Collections
  : **DEPRECATED use Query Type `Collection Query` with Query instead.** Comma-separated list of collections to query from a MarkLogic server.
