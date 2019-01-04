@@ -9,7 +9,8 @@ main:
         { url: '/file-system-to-marklogic', text: 'File System to MarkLogic'},
         { url: '/run-data-hub-input-flow', text: 'Run Data Hub Input Flow'},
         { url: '/step-by-step#add-querymarklogic-processor', text: 'Extract MarkLogic Documents'},
-        { url: '/bulk-record-insert-into-marklogic', text: 'Bulk Record Insert Into MarkLogic'}
+        { url: '/bulk-record-insert-into-marklogic', text: 'Bulk Record Insert Into MarkLogic'},
+        { url: '/dhf-with-smart-mastering', text: 'DHF With Smart Mastering'}
       ]
     }
   - { url: '/error-resolutions', text: 'Error Resolutions' }
