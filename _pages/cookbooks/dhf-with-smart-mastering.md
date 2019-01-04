@@ -144,8 +144,6 @@ Link `batch_success` from "PutMarkLogic" to "DHF Harmonize"
 
 ### ExtensionCallMarkLogic *Smart Mastering*
 
-Link `success` from "DHF Harmonize" to "Smart Mastering"
-
 **Properties**
 
 DatabaseClient Service
