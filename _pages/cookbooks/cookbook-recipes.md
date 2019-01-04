@@ -37,9 +37,16 @@ Insert data into MarkLogic in bulk with using `PutMarkLogicRecord` with Record R
 
 [Read More][bulk-record-insert-into-marklogic]
 
+## [DHF With Smart Mastering][dhf-with-smart-mastering]
+
+Use `PutMarkLogic` and `ExtensionCallMarkLogic` to run DHF and Smart Mastering.
+
+[Read More][dhf-with-smart-mastering]
+
 [relational-database]:./get-data-from-a-relational-database
 [file-system]:./file-system-to-marklogic
 [dhf-input-flow]:./run-data-hub-input-flow
 [query-flow]:./step-by-step#add-querymarklogic-processor
 [query-flow-templates]:./step-by-step#additional-query-templates
 [bulk-record-insert-into-marklogic]:./bulk-record-insert-into-marklogic
+[dhf-with-smart-mastering]:./dhf-with-smart-mastering
