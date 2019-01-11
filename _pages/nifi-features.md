@@ -90,6 +90,13 @@ Apply Result Type
 State Index
  : Definition of the index which will be used to keep state to restrict future calls. *Currently only supports xs:dateTime indexes.*
 
+Example State Index Values By Type
+ * Element Index: `xhtml:title`
+   * Dynamic Property `ns:xhtml` => `http://www.w3.org/1999/xhtml`
+ * JSON Property: `title`
+ * Path Index: `/xhtml:html/xhtml:head/xhtml:title`
+   * Dynamic Property `ns:xhtml` => `http://www.w3.org/1999/xhtml`
+
 State Index Type
  : Type of index to determine state for next set of documents.
  * **Element Index** Index on an element. (Namespaces can be defined with dynamic properties prefixed with 'ns:'.)
@@ -143,6 +150,13 @@ Query Type
 
 State Index
  : Definition of the index which will be used to keep state to restrict future calls. *Currently only supports xs:dateTime indexes.*
+
+Example State Index Values By Type
+ * Element Index: `xhtml:title`
+   * Dynamic Property `ns:xhtml` => `http://www.w3.org/1999/xhtml`
+ * JSON Property: `title`
+ * Path Index: `/xhtml:html/xhtml:head/xhtml:title`
+   * Dynamic Property `ns:xhtml` => `http://www.w3.org/1999/xhtml`
 
 State Index Type
  : Type of index to determine state for next set of documents.
@@ -451,6 +465,13 @@ Return Type
 
 State Index
  : Definition of the index which will be used to keep state to restrict future calls. *Currently only supports xs:dateTime indexes.*
+
+Example State Index Values By Type
+ * Element Index: `xhtml:title`
+   * Dynamic Property `ns:xhtml` => `http://www.w3.org/1999/xhtml`
+ * JSON Property: `title`
+ * Path Index: `/xhtml:html/xhtml:head/xhtml:title`
+   * Dynamic Property `ns:xhtml` => `http://www.w3.org/1999/xhtml`
 
 State Index Type
  : Type of index to determine state for next set of documents.
