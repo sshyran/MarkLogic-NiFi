@@ -22,8 +22,14 @@ First, be sure to look over the ["Error Resolutions" page][error-resolutions] to
 
 ### What version of MarkLogic do I need?
 
-The MarkLogic NiFi bundle requires MarkLogic 9.
+The MarkLogic NiFi bundle requires MarkLogic 9. See the [MarkLogic Java API Guide][java-required-software] for additional details on required software.
 
+### What is supported?
+
+The `ExecuteScriptMarkLogic` is provided as a convenience and is **not** supported due to the nature of evaluating [ad-hoc queries][ad-hoc-queries]. All other processors are supported by MarkLogic.
+
+[ad-hoc-queries]: https://docs.marklogic.com/9.0/guide/java/resourceservices#id_70532
 [error-resolutions]: ./error-resolutions
 [apache-faqs]: https://cwiki.apache.org/confluence/display/NIFI/FAQs
 [github-issue-tracker]: https://github.com/marklogic/nifi/issues
+[java-required-software]: https://docs.marklogic.com/9.0/guide/java/intro#id_35911
