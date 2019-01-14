@@ -34,7 +34,7 @@ Add a `success` relationship from the `FetchFile` processor to the `UnpackConten
 
 ## Add PutMarkLogicRecord Processor
 
-Add the `PutMarkLogic` Processor to the grid. Configure the processor so that the `failure` and `success` relationships are automatically terminated. 
+Add the `PutMarkLogicRecord` Processor to the grid. Configure the processor so that the `batch_sucess`, `original`, `failure`, and `success` relationships are automatically terminated. 
 
 Set the `DatabaseClient Service` to the Controller Service we created previously in [Setup MarkLogicDatabaseClientService](#setup-marklogicdatabaseclientservice).
 
