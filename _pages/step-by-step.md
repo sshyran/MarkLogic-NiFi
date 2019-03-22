@@ -116,11 +116,13 @@ Add the `QueryMarkLogic` Processor to the grid. Configure the processor so that 
 
 There are other `Query Type` options that can be used. Below are examples of `Query` property values for each of those `Query Type` options. See [Additional Query Templates](#additional-query-templates) for templates with the different approaches.
 
-##### Combined Query (JSON)
+**_Important:_** The CTS Query approach is labelled as a `Combined Query` query type in the QueryMarkLogic processor.
+
+##### CTS Query (JSON)
 ```javascript
 { "ctsquery": { "collectionQuery": { "uris": ["iot-data"] } } }
 ```
-##### Combined Query (XML)
+##### CTS Query (XML)
 ```xml
 <cts:collection-query xmlns:cts="http://marklogic.com/cts">
   <cts:uri>iot-data</cts:uri>
