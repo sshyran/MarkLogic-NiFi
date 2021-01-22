@@ -267,9 +267,13 @@ public class QueryMarkLogic extends AbstractMarkLogicProcessor {
                 session.transfer(incomingFlowFile, ORIGINAL);
             }
 
+            getLogger().info("Starting job");
             dataMovementManager.startJob(queryBatcher);
+            getLogger().info("Awaiting job completion");
             queryBatcher.awaitCompletion();
+            getLogger().info("Stopping job");
             dataMovementManager.stopJob(queryBatcher);
+            getLogger().info("Committing session");
             session.commit();
         } catch (final Throwable t) {
             context.yield();

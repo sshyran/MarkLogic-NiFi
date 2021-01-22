@@ -29,6 +29,7 @@ import org.apache.nifi.reporting.InitializationException;
 import org.apache.nifi.util.MockFlowFile;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -56,18 +57,17 @@ public class PutMarkLogicDuplicateUriTest extends AbstractMarkLogicProcessorTest
 		Map<String, String> attributes = new HashMap<>();
 		attributes.put("id", "123456.json");
 
-		MockFlowFile flowFile = addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
+		addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
 		processor.onTrigger(processContext, mockProcessSessionFactory);
-		MockFlowFile flowFile2 = addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
+		addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
 		processor.onTrigger(processContext, mockProcessSessionFactory);
-		MockFlowFile flowFile3 = addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
+		addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
 
 		processor.onTrigger(processContext, mockProcessSessionFactory);
 
 		assertEquals("Should only be 3 uri in uriFlowFileMap", 3, TestDuplicatePutMarkLogic.uriFlowFileMap.size());
 		assertEquals("Should only be 0 uri in duplicateFlowFileMap", 0,	TestDuplicatePutMarkLogic.duplicateFlowFileMap.size());
 		assertEquals(3, processor.writeEventsCount);
-		processor.onScheduled(processContext);
 	}
 
 	@Test
@@ -84,9 +84,9 @@ public class PutMarkLogicDuplicateUriTest extends AbstractMarkLogicProcessorTest
 
 		MockFlowFile flowFile = addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
 		processor.onTrigger(processContext, mockProcessSessionFactory);
-		MockFlowFile flowFile2 = addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
+		addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
 		processor.onTrigger(processContext, mockProcessSessionFactory);
-		MockFlowFile flowFile3 = addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
+		addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
 
 		processor.onTrigger(processContext, mockProcessSessionFactory);
 
@@ -96,8 +96,8 @@ public class PutMarkLogicDuplicateUriTest extends AbstractMarkLogicProcessorTest
 		assertEquals("The first flowFile UUID should be the currentFlowFileUUID ",
 				flowFile.getAttribute(CoreAttributes.UUID.key()), processor.lastUUID);
 		assertEquals("Should be only 1 writeEvent",1, processor.writeEventsCount);
-		processor.onScheduled(processContext);
 	}
+
 	@Test
 	public void testDuplicateUriUseCloseBatchHandling() {
 		processContext.setProperty(PutMarkLogic.DUPLICATE_URI_HANDLING, PutMarkLogic.CLOSE_BATCH);
@@ -117,10 +117,8 @@ public class PutMarkLogicDuplicateUriTest extends AbstractMarkLogicProcessorTest
 		attributes.put("index", "3");
 		MockFlowFile flowFile3 = addFlowFile(attributes, "{\"hello\":\"nifi rocks\"}");
 		// The last superseded flow file is always the flowFile2
-		String lastFlowUUID = flowFile2.getAttribute(CoreAttributes.UUID.key());
 		processor.onTrigger(processContext, mockProcessSessionFactory);
-		//assertEquals("CloseBatchWriter should be 2",2,processor.closeWriterBatcherCount);
-		//processor.onScheduled(processContext);
+		assertEquals("CloseBatchWriter should be 2",2,processor.closeWriterBatcherCount);
 	}
 }
 
