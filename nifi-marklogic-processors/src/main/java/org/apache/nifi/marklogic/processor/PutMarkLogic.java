@@ -267,7 +267,6 @@ public class PutMarkLogic extends AbstractMarkLogicProcessor {
         getLogger().info("OnScheduled");
         super.populatePropertiesByPrefix(context);
         try {
-            DatabaseClient client = getDatabaseClient(context);
             dataMovementManager = getDatabaseClient(context).newDataMovementManager();
             writeBatcher = dataMovementManager.newWriteBatcher()
                     .withJobId(context.getProperty(JOB_ID).getValue())

@@ -47,7 +47,7 @@ import static junit.framework.TestCase.assertTrue;
  * The test database is cleared before every test is run so that no "residue" is left behind.
  */
 @ContextConfiguration(classes = {TestConfig.class})
-public class AbstractMarkLogicIT extends AbstractSpringMarkLogicTest {
+public abstract class AbstractMarkLogicIT extends AbstractSpringMarkLogicTest {
 
     @Autowired
     protected TestConfig testConfig;

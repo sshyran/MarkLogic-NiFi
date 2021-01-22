@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AbstractMarkLogicProcessorTest extends Assert {
+public abstract class AbstractMarkLogicProcessorTest extends Assert {
     Processor processor;
     protected MockProcessContext processContext;
     protected MockProcessorInitializationContext initializationContext;
