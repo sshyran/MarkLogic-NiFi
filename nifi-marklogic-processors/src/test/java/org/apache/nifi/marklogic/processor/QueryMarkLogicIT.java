@@ -74,12 +74,6 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
         dataMovementManager.stopJob(writeBatcher);
     }
 
-    @AfterEach
-    public void teardown() {
-        //super.teardown();
-        //deleteDocumentsInCollection(collection);
-    }
-
     protected TestRunner getNewTestRunner(Class processor) {
         TestRunner runner = super.getNewTestRunner(processor);
         runner.assertNotValid();
@@ -88,14 +82,22 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
     }
 
     @Test
-    public void testSimpleCollectionQuery() throws InitializationException {
+    public void testSimpleCollectionQuery() {
         TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
         runner.setProperty(QueryMarkLogic.QUERY, collection);
         runner.setProperty(QueryMarkLogic.QUERY_TYPE, QueryMarkLogic.QueryTypes.COLLECTION);
+        runner.enqueue(new MockFlowFile(12345));
         runner.assertValid();
         runner.run();
+
+        runner.assertTransferCount(QueryMarkLogic.ORIGINAL, 1);
+        MockFlowFile originalFlowFile = runner.getFlowFilesForRelationship(QueryMarkLogic.ORIGINAL).get(0);
+        assertEquals("If a FlowFile is passed to DeleteML/QueryML, it is expected to be sent to the " +
+                "ORIGINAL relationship before the job completes", 12345, originalFlowFile.getId());
+
         runner.assertTransferCount(QueryMarkLogic.SUCCESS, numDocs);
         runner.assertAllFlowFilesContainAttribute(QueryMarkLogic.SUCCESS,CoreAttributes.FILENAME.key());
+
         List<MockFlowFile> flowFiles = runner.getFlowFilesForRelationship(QueryMarkLogic.SUCCESS);
         byte[] actualByteArray = null;
         for(MockFlowFile flowFile : flowFiles) {
@@ -110,7 +112,7 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
     }
 
     @Test
-    public void testOldCollectionQuery() throws InitializationException {
+    public void testOldCollectionQuery() {
         TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
         runner.setProperty(QueryMarkLogic.COLLECTIONS, collection);
         runner.assertValid();
@@ -216,13 +218,18 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
     }
 
     @Test
-    @Disabled("Will fix in separate PR")
-    public void testStateManagerWithStringQuery() throws InitializationException, IOException {
+    public void testStateManagerWithJSONStringQuery() throws InitializationException, IOException {
         TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
-        // test with string query
         runner.setProperty(QueryMarkLogic.QUERY, "jsoncontent");
         runner.setProperty(QueryMarkLogic.QUERY_TYPE, QueryMarkLogic.QueryTypes.STRING);
         testStateManagerJSON(runner, expectedJsonCount);
+        runner.shutdown();
+    }
+
+    @Test
+    @Disabled(value = "Disabled due to https://github.com/marklogic/java-client-api/issues/1283")
+    public void testStateManagerWithXMLStringQuery() throws InitializationException, IOException {
+        TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
         runner.setProperty(QueryMarkLogic.QUERY, "xmlcontent");
         runner.setProperty(QueryMarkLogic.QUERY_TYPE, QueryMarkLogic.QueryTypes.STRING);
         testStateManagerXML(runner, expectedXmlCount);
@@ -331,8 +338,7 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
     }
 
     @Test
-    @Disabled("Will fix in separate PR")
-    public void testStructuredXMLQuery() throws InitializationException, SAXException, IOException, ParserConfigurationException {
+    public void testStructuredXMLQuery() throws SAXException, IOException, ParserConfigurationException {
         TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
         Map<String,String> attributes = new HashMap<>();
         attributes.put("word", "xmlcontent");
@@ -346,8 +352,13 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
         runner.setProperty(QueryMarkLogic.QUERY_TYPE, QueryMarkLogic.QueryTypes.STRUCTURED_XML);
         runner.assertValid();
         runner.run();
+
+        // The single enqueued doc should show up here
+        runner.assertTransferCount(QueryMarkLogic.ORIGINAL, 1);
+
         runner.assertTransferCount(QueryMarkLogic.SUCCESS, expectedXmlCount);
         runner.assertAllFlowFilesContainAttribute(QueryMarkLogic.SUCCESS,CoreAttributes.FILENAME.key());
+
         List<MockFlowFile> flowFiles = runner.getFlowFilesForRelationship(QueryMarkLogic.SUCCESS);
         assertEquals(flowFiles.size(), expectedXmlCount);
         byte[] actualByteArray = null;
