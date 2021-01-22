@@ -62,6 +62,18 @@
                     <artifactId>mlcp-util</artifactId>
                 </exclusion>
                 <exclusion>
+                    <groupId>com.marklogic</groupId>
+                    <artifactId>marklogic-client-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.marklogic</groupId>
+                    <artifactId>ml-javaclient-util</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.marklogic</groupId>
+                    <artifactId>marklogic-data-movement-components</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>com.beust</groupId>
                     <artifactId>jcommander</artifactId>
                 </exclusion>

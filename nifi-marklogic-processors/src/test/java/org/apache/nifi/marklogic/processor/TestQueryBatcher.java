@@ -202,4 +202,19 @@ class TestQueryBatcher implements QueryBatcher {
 	public Calendar getJobEndTime() {
 		return null;
 	}
+
+    @Override
+    public void setMaxBatches(long l) {
+        
+    }
+
+    @Override
+    public void setMaxBatches() {
+
+    }
+
+    @Override
+    public long getMaxBatches() {
+        return 0;
+    }
 }
