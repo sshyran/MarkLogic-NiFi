@@ -15,6 +15,8 @@ function ext:get(
   $params  as map:map
 ) as document-node()*
 {
+    xdmp:log(("context", $context)),
+    xdmp:log(("params", $params)),
   document{ map:get($params, "replay") }
 };
 

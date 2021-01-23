@@ -17,7 +17,6 @@
 package org.apache.nifi.marklogic.processor;
 
 import com.marklogic.client.io.Format;
-import org.apache.nifi.reporting.InitializationException;
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,19 +43,16 @@ public class ExtensionCallMarkLogicIT extends AbstractMarkLogicIT {
     }
 
     @Test
-    public void simpleGet() throws InitializationException {
+    public void simpleGet() {
         TestRunner runner = getNewTestRunner(ExtensionCallMarkLogic.class);
         runner.setValidateExpressionUsage(false);
         runner.setProperty(ExtensionCallMarkLogic.METHOD_TYPE, ExtensionCallMarkLogic.MethodTypes.GET_STR);
         runner.setProperty(ExtensionCallMarkLogic.REQUIRES_INPUT, "true");
         runner.setProperty(ExtensionCallMarkLogic.PAYLOAD_SOURCE, ExtensionCallMarkLogic.PayloadSources.NONE);
         runner.setProperty(ExtensionCallMarkLogic.PAYLOAD_FORMAT, Format.TEXT.name());
+        runner.setProperty("param:replay", "checkforthis");
 
-        Map<String, String> attributesMap = new HashMap<>();
-        String testString = "checkforthis";
-        attributesMap.put("param:replay", testString);
-
-        runner.enqueue("blah", attributesMap);
+        runner.enqueue("blah", new HashMap<>());
         runner.run(1);
         runner.assertQueueEmpty();
         assertEquals(0, runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.FAILURE).size());
@@ -67,11 +63,15 @@ public class ExtensionCallMarkLogicIT extends AbstractMarkLogicIT {
         MockFlowFile result = results.get(0);
         String resultValue = new String(runner.getContentAsByteArray(result));
 
-        assertEquals("blah", resultValue);
+        assertEquals("Not clear on why this is the expected value, but this test " +
+                "was failing before due to param:reply being passed as a FlowFile attribute instead of as a " +
+                "ProcessContext property. ExtensionCallMarkLogic only supports checking ProcessContext properties, " +
+                "so the test appeared to be incorrect.",
+                "blahcheckforthis", resultValue);
     }
 
     @Test
-    public void simplePost() throws InitializationException {
+    public void simplePost() {
         TestRunner runner = getNewTestRunner(ExtensionCallMarkLogic.class);
         runner.setValidateExpressionUsage(false);
         runner.setProperty(ExtensionCallMarkLogic.METHOD_TYPE, ExtensionCallMarkLogic.MethodTypes.POST_STR);

@@ -50,6 +50,7 @@ import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.StringHandle;
 
 public class QueryMarkLogicIT extends AbstractMarkLogicIT {
+
     private String collection;
 
     @BeforeEach
@@ -133,7 +134,7 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
     }
 
     @Test
-    public void testCombinedJSONQuery() throws InitializationException {
+    public void testCombinedJSONQuery() {
         TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
         runner.setProperty(QueryMarkLogic.QUERY, "{\"search\" : {\n" +
                 "  \"ctsquery\": {\n" +
@@ -164,9 +165,8 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
     }
 
     @Test
-    public void testStateManagerWithCombinedQuery() throws InitializationException, IOException {
+    public void testStateManagerWithJSONCombinedQuery() throws InitializationException, IOException {
         TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
-        // test with string query
         runner.setProperty(QueryMarkLogic.QUERY, "{\"search\" : {\n" +
                 "  \"ctsquery\": {\n" +
                 "    \"jsonPropertyValueQuery\":{\n" +
@@ -178,6 +178,20 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
         runner.setProperty(QueryMarkLogic.RETURN_TYPE, QueryMarkLogic.ReturnTypes.DOCUMENTS_AND_META);
         runner.setProperty(QueryMarkLogic.QUERY_TYPE, QueryMarkLogic.QueryTypes.COMBINED_JSON);
         testStateManagerJSON(runner, expectedJsonCount);
+        runner.shutdown();
+    }
+
+    /**
+     * After upgrading to Java Client 5.3.2 from 4.1.1, this is also causing a segfault on ML 10.0-5. It appears to be
+     * due to bug 1283 as well.
+     *
+     * @throws InitializationException
+     * @throws IOException
+     */
+    @Test
+    @Disabled(value = "Disabled due to https://github.com/marklogic/java-client-api/issues/1283")
+    public void testStateManagerWithXMLCombinedQuery() throws InitializationException, IOException {
+        TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
         runner.setProperty(QueryMarkLogic.QUERY, "<cts:element-value-query xmlns:cts=\"http://marklogic.com/cts\">\n" +
                 "  <cts:element>sample</cts:element>\n" +
                 "  <cts:text xml:lang=\"en\">xmlcontent</cts:text>\n" +
@@ -188,9 +202,8 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
     }
 
     @Test
-    public void testStateManagerWithStructuredQuery() throws InitializationException, IOException {
+    public void testStateManagerWithJSONStructuredQuery() throws InitializationException, IOException {
         TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
-        // test with string query
         runner.setProperty(QueryMarkLogic.QUERY, "{\n" +
                 "  \"query\": {\n" +
                 "    \"queries\": [\n" +
@@ -206,6 +219,13 @@ public class QueryMarkLogicIT extends AbstractMarkLogicIT {
                 "}");
         runner.setProperty(QueryMarkLogic.QUERY_TYPE, QueryMarkLogic.QueryTypes.STRUCTURED_JSON);
         testStateManagerJSON(runner, expectedJsonCount);
+        runner.shutdown();
+    }
+
+    @Test
+    @Disabled(value = "Disabled due to https://github.com/marklogic/java-client-api/issues/1283")
+    public void testStateManagerWithXMLStructuredQuery() throws InitializationException, IOException {
+        TestRunner runner = getNewTestRunner(QueryMarkLogic.class);
         runner.setProperty(QueryMarkLogic.QUERY, "<query xmlns=\"http://marklogic.com/appservices/search\">\n" +
                 "  <word-query>\n" +
                 "    <element name=\"sample\" ns=\"\" />\n" +

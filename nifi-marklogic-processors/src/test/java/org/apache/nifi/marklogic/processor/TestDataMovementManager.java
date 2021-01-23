@@ -19,13 +19,8 @@ package org.apache.nifi.marklogic.processor;
 import java.util.Iterator;
 
 import com.marklogic.client.DatabaseClient.ConnectionType;
-import com.marklogic.client.datamovement.Batcher;
-import com.marklogic.client.datamovement.DataMovementManager;
-import com.marklogic.client.datamovement.ForestConfiguration;
-import com.marklogic.client.datamovement.JobReport;
-import com.marklogic.client.datamovement.JobTicket;
-import com.marklogic.client.datamovement.QueryBatcher;
-import com.marklogic.client.datamovement.WriteBatcher;
+import com.marklogic.client.datamovement.*;
+import com.marklogic.client.io.marker.ContentHandle;
 import com.marklogic.client.query.QueryDefinition;
 import com.marklogic.client.query.RawCombinedQueryDefinition;
 import com.marklogic.client.query.RawCtsQueryDefinition;
@@ -115,6 +110,16 @@ class TestDataMovementManager implements DataMovementManager {
 
     @Override
     public ConnectionType getConnectionType() {
+        return null;
+    }
+
+    @Override
+    public JobTicket startJob(RowBatcher<?> rowBatcher) {
+        return null;
+    }
+
+    @Override
+    public <T> RowBatcher<T> newRowBatcher(ContentHandle<T> contentHandle) {
         return null;
     }
 }
