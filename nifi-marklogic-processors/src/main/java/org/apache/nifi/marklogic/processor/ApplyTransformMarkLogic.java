@@ -129,7 +129,7 @@ public class ApplyTransformMarkLogic extends QueryMarkLogic {
         return applyTransform;
     }
 
-    public static class ApplyResultTypes extends AllowableValuesSet {
+    public static class ApplyResultTypes {
         public static final String INGORE_STR = "Ignore";
         public static final AllowableValue IGNORE = new AllowableValue(INGORE_STR, INGORE_STR,
                 "Run the transform on each document, but ignore the value returned by the transform because the transform " +

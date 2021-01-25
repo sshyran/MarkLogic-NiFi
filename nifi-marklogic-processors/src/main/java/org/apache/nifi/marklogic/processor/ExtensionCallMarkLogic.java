@@ -168,15 +168,15 @@ public class ExtensionCallMarkLogic extends AbstractMarkLogicProcessor {
     }
 
     public void onTrigger(ProcessContext context, ProcessSession session) throws ProcessException {
-        try {
-            FlowFile flowFile = session.get();
-            if (requiresInput && flowFile == null) {
-                context.yield();
-                return;
-            } else if (!requiresInput) {
-                flowFile = session.create();
-            }
+        FlowFile flowFile = session.get();
+        if (requiresInput && flowFile == null) {
+            context.yield();
+            return;
+        } else if (!requiresInput) {
+            flowFile = session.create();
+        }
 
+        try {
             String method = context.getProperty(METHOD_TYPE).getValue();
             BytesHandle bytesHandle = new BytesHandle();
             String payloadType = context.getProperty(PAYLOAD_SOURCE).getValue();
@@ -213,8 +213,10 @@ public class ExtensionCallMarkLogic extends AbstractMarkLogicProcessor {
             }
 
             transferAndCommit(session, flowFile, SUCCESS);
-        } catch (final Throwable t) {
-            this.handleThrowable(t, session);
+        } catch (Throwable t) {
+            Throwable rootCause = logErrorAndReturnRootCause(t);
+            session.putAttribute(flowFile, "markLogicErrorMessage", rootCause.getMessage());
+            transferAndCommit(session, flowFile, FAILURE);
         }
     }
 
@@ -274,7 +276,7 @@ public class ExtensionCallMarkLogic extends AbstractMarkLogicProcessor {
         }
     }
 
-    public static class PayloadSources extends AllowableValuesSet {
+    public static class PayloadSources {
 
         public static final String NONE_STR = "None";
         public static final AllowableValue NONE = new AllowableValue(NONE_STR, NONE_STR,
@@ -289,7 +291,7 @@ public class ExtensionCallMarkLogic extends AbstractMarkLogicProcessor {
         public static final AllowableValue[] allValues = new AllowableValue[]{NONE, FLOWFILE_CONTENT, PAYLOAD_PROPERTY};
     }
 
-    public static class MethodTypes extends AllowableValuesSet {
+    public static class MethodTypes {
 
         public static final String POST_STR = "POST";
         public static final AllowableValue POST = new AllowableValue(POST_STR, POST_STR,

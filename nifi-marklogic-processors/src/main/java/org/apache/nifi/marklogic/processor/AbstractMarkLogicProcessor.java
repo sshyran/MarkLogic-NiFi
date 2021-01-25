@@ -215,41 +215,44 @@ public abstract class AbstractMarkLogicProcessor extends AbstractSessionFactoryP
         return properties;
     }
 
-    public static abstract class AllowableValuesSet {
-        public static AllowableValue[] allValues;
-
-    }
-
-    protected void handleThrowable(final Throwable t, final ProcessSession session) {
-        final String statusMsg;
-        /* FailedRequestException can hide the root cause a layer deeper.
-         * Go to the failed request to get the status message.
-         */
-        if (t instanceof FailedRequestException) {
-            statusMsg = ((FailedRequestException) t).getFailedRequest().getMessage();
-        } else {
-            statusMsg = "";
-        }
-        final Throwable rootCause = ExceptionUtils.getRootCause(t);
-        if (t instanceof UnauthorizedUserException || statusMsg.matches(unauthorizedPattern.pattern())) {
-            getLogger().error("{} failed! Verify your credentials are correct. Throwable exception {}; rolling back session", new Object[]{this, rootCause});
-        } else if (t instanceof ForbiddenUserException || statusMsg.matches(forbiddenPattern.pattern())) {
-            getLogger().error("{} failed! Verify your user has ample privileges. Throwable exception {}; rolling back session", new Object[]{this, rootCause});
-        } else if (t instanceof ResourceNotFoundException || statusMsg.matches(resourceNotFoundPattern.pattern())) {
-            getLogger().error("{} failed due to 'Resource Not Found'! " +
-                    "Verify you're pointing a MarkLogic REST instance and referenced extensions/transforms are installed. "+
-                    "Throwable exception {}; rolling back session", new Object[]{this, rootCause});
-        } else if (statusMsg.matches(invalidXMLPattern.pattern())) {
-            getLogger().error("{} failed! Expected valid XML payload! Throwable exception {}; rolling back session", new Object[]{this, rootCause});
-        } else if (statusMsg.matches(invalidJSONPattern.pattern())) {
-            getLogger().error("{} failed! Expected valid JSON payload! Throwable exception {}; rolling back session", new Object[]{this, rootCause});
-        } else if (t instanceof MarkLogicBindingException) {
-            getLogger().error("{} failed to bind Java Object to XML or JSON! Throwable exception {}; rolling back session", new Object[]{this, rootCause});
-        } else {
-            getLogger().error("{} failed! Throwable exception {}; rolling back session", new Object[]{this, rootCause});
-        }
+    /**
+     * Use this when you want an error to result in the session being rolled back and a ProcessException being
+     * thrown. Note that this should result in an incoming FlowFile being left in the queue before the processor. This
+     * may not be desirable to a user; it may be better to route the FlowFile to a failure relationship.
+     *
+     * @param t
+     * @param session
+     */
+    protected void logErrorAndRollbackSession(final Throwable t, final ProcessSession session) {
+        Throwable rootCause = logErrorAndReturnRootCause(t);
+        getLogger().info("Rolling back session");
         session.rollback(true);
         throw new ProcessException(rootCause);
+    }
+
+    protected Throwable logErrorAndReturnRootCause(Throwable t) {
+        final String errorMessage = t.getMessage() != null ? t.getMessage() : "";
+        final Throwable rootCause = ExceptionUtils.getRootCause(t);
+
+        if (t instanceof UnauthorizedUserException || errorMessage.matches(unauthorizedPattern.pattern())) {
+            getLogger().error("{} failed! Verify your credentials are correct. Throwable exception {}", new Object[]{this, rootCause});
+        } else if (t instanceof ForbiddenUserException || errorMessage.matches(forbiddenPattern.pattern())) {
+            getLogger().error("{} failed! Verify your user has ample privileges. Throwable exception {}", new Object[]{this, rootCause});
+        } else if (t instanceof ResourceNotFoundException || errorMessage.matches(resourceNotFoundPattern.pattern())) {
+            getLogger().error("{} failed due to 'Resource Not Found'! " +
+                    "Verify you're pointing a MarkLogic REST instance and referenced extensions/transforms are installed. "+
+                    "Throwable exception {}", new Object[]{this, rootCause});
+        } else if (errorMessage.matches(invalidXMLPattern.pattern())) {
+            getLogger().error("{} failed! Expected valid XML payload! Throwable exception {}", new Object[]{this, rootCause});
+        } else if (errorMessage.matches(invalidJSONPattern.pattern())) {
+            getLogger().error("{} failed! Expected valid JSON payload! Throwable exception {}", new Object[]{this, rootCause});
+        } else if (t instanceof MarkLogicBindingException) {
+            getLogger().error("{} failed to bind Java Object to XML or JSON! Throwable exception {}", new Object[]{this, rootCause});
+        } else {
+            getLogger().error("{} failed! Throwable exception {}", new Object[]{this, rootCause});
+        }
+
+        return rootCause;
     }
 
     /**

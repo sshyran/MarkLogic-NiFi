@@ -161,7 +161,7 @@ public class RunFlowMarkLogic extends AbstractMarkLogicProcessor {
 			session.write(flowFile, out -> out.write(response.toJson().getBytes()));
 			transferAndCommit(session, flowFile, FINISHED);
 		} catch (Throwable t) {
-			this.handleThrowable(t, session);
+			this.logErrorAndRollbackSession(t, session);
 		}
 	}
 
