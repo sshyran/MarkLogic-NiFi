@@ -89,7 +89,7 @@ public class QueryRowsMarkLogic extends AbstractMarkLogicProcessor {
 			
 			transferAndCommit(session, flowFile, SUCCESS);
 		} catch (final Throwable t) {
-			this.handleThrowable(t, session);
+			this.logErrorAndRollbackSession(t, session);
 		}
 	}
 

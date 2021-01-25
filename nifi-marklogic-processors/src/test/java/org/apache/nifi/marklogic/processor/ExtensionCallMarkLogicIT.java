@@ -26,26 +26,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExtensionCallMarkLogicIT extends AbstractMarkLogicIT {
 
     @BeforeEach
-    public void setup() {
+    public void beforeEach() {
         super.setup();
-    }
-
-    public TestRunner getNewTestRunner(Class processor) {
-        TestRunner runner = super.getNewTestRunner(processor);
-        runner.setProperty(ExtensionCallMarkLogic.EXTENSION_NAME, "replay");
-        return runner;
     }
 
     @Test
     public void simpleGet() {
-        TestRunner runner = getNewTestRunner(ExtensionCallMarkLogic.class);
+        TestRunner runner = super.getNewTestRunner(ExtensionCallMarkLogic.class);
         runner.setValidateExpressionUsage(false);
+        runner.setProperty(ExtensionCallMarkLogic.EXTENSION_NAME, "replay");
         runner.setProperty(ExtensionCallMarkLogic.METHOD_TYPE, ExtensionCallMarkLogic.MethodTypes.GET_STR);
         runner.setProperty(ExtensionCallMarkLogic.REQUIRES_INPUT, "true");
         runner.setProperty(ExtensionCallMarkLogic.PAYLOAD_SOURCE, ExtensionCallMarkLogic.PayloadSources.NONE);
@@ -65,21 +60,22 @@ public class ExtensionCallMarkLogicIT extends AbstractMarkLogicIT {
         assertEquals(1, runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.SUCCESS).size());
 
         List<MockFlowFile> results = runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.SUCCESS);
-        assertTrue("1 match", results.size() == 1);
+        assertEquals(1, results.size());
+
         MockFlowFile result = results.get(0);
         String resultValue = new String(runner.getContentAsByteArray(result));
-
-        assertEquals("The test 'replay' extension is expected to return the value of the 'replay' parameter, " +
+        assertEquals("dynamicValue", resultValue,
+                "The test 'replay' extension is expected to return the value of the 'replay' parameter, " +
                         "which is sent via the replay:param property. That property then has an expression, " +
                         "which is expected to be evaluated against the flowfile attributes, producing the " +
-                        "value 'dynamicvalue'",
-                "dynamicValue", resultValue);
+                        "value 'dynamicvalue'");
     }
 
     @Test
     public void simplePost() {
         TestRunner runner = getNewTestRunner(ExtensionCallMarkLogic.class);
         runner.setValidateExpressionUsage(false);
+        runner.setProperty(ExtensionCallMarkLogic.EXTENSION_NAME, "replay");
         runner.setProperty(ExtensionCallMarkLogic.METHOD_TYPE, ExtensionCallMarkLogic.MethodTypes.POST_STR);
         runner.setProperty(ExtensionCallMarkLogic.REQUIRES_INPUT, "true");
         runner.setProperty(ExtensionCallMarkLogic.PAYLOAD_SOURCE, ExtensionCallMarkLogic.PayloadSources.FLOWFILE_CONTENT_STR);
@@ -95,11 +91,34 @@ public class ExtensionCallMarkLogicIT extends AbstractMarkLogicIT {
         assertEquals(1, runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.SUCCESS).size());
 
         List<MockFlowFile> results = runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.SUCCESS);
-        assertTrue("1 match", results.size() == 1);
+        assertEquals(1, results.size());
         MockFlowFile result = results.get(0);
         String resultValue = new String(runner.getContentAsByteArray(result));
 
         assertEquals(testString + testString, resultValue);
     }
 
+    @Test
+    void resourceReturns500() {
+        TestRunner runner = getNewTestRunner(ExtensionCallMarkLogic.class);
+        runner.setValidateExpressionUsage(false);
+        runner.setProperty(ExtensionCallMarkLogic.EXTENSION_NAME, "throwsError");
+        runner.setProperty(ExtensionCallMarkLogic.METHOD_TYPE, ExtensionCallMarkLogic.MethodTypes.GET_STR);
+        runner.setProperty(ExtensionCallMarkLogic.REQUIRES_INPUT, "true");
+        runner.setProperty(ExtensionCallMarkLogic.PAYLOAD_SOURCE, ExtensionCallMarkLogic.PayloadSources.NONE);
+
+        runner.enqueue(new MockFlowFile(1));
+        runner.run(1);
+        runner.assertQueueEmpty();
+
+        assertEquals(1, runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.FAILURE).size());
+        assertEquals(0, runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.SUCCESS).size());
+
+        MockFlowFile flowFile = runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.FAILURE).get(0);
+        assertTrue(flowFile.getAttributes().containsKey("markLogicErrorMessage"), "The root cause error message " +
+                "should be added to the flowfile attributes so that a downstream processor can easily access it");
+        String message = flowFile.getAttributes().get("markLogicErrorMessage");
+        assertTrue(message.contains("Server Message: GetError Description (GetErrorQName): 500 GetError message"),
+                "The error message should contain the error details from the REST extension");
+    }
 }

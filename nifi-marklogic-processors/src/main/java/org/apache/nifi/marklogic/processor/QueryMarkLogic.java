@@ -277,7 +277,7 @@ public class QueryMarkLogic extends AbstractMarkLogicProcessor {
             session.commit();
         } catch (final Throwable t) {
             context.yield();
-            this.handleThrowable(t, session);
+            this.logErrorAndRollbackSession(t, session);
         }
     }
 
@@ -592,7 +592,7 @@ public class QueryMarkLogic extends AbstractMarkLogicProcessor {
         return handle;
     }
 
-    public static class QueryTypes extends AllowableValuesSet {
+    public static class QueryTypes {
         public static final String COLLECTION_STR = "Collection Query";
         public static final AllowableValue COLLECTION = new AllowableValue(COLLECTION_STR, COLLECTION_STR,
                 "Comma-separated list of collections to query from a MarkLogic server");
@@ -618,7 +618,7 @@ public class QueryMarkLogic extends AbstractMarkLogicProcessor {
 
     }
 
-    public static class ReturnTypes extends AllowableValuesSet {
+    public static class ReturnTypes {
         public static final String URIS_ONLY_STR = "URIs Only";
         public static final AllowableValue URIS_ONLY = new AllowableValue(URIS_ONLY_STR, URIS_ONLY_STR,
                 "Only return document URIs for matching documents in FlowFile attribute");
@@ -637,7 +637,7 @@ public class QueryMarkLogic extends AbstractMarkLogicProcessor {
 
     }
 
-    public static class IndexTypes extends AllowableValuesSet {
+    public static class IndexTypes {
         public static final String ELEMENT_STR = "Element Index";
         public static final AllowableValue ELEMENT = new AllowableValue(ELEMENT_STR, ELEMENT_STR,
                 "Index on an element. (Namespaces can be defined with dynamic properties prefixed with 'ns:'.)");

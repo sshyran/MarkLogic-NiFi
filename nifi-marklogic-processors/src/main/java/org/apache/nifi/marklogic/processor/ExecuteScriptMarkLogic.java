@@ -301,7 +301,7 @@ public class ExecuteScriptMarkLogic extends AbstractMarkLogicProcessor {
 
             session.commit();
         } catch (final Throwable t) {
-            this.handleThrowable(t, session);
+            this.logErrorAndRollbackSession(t, session);
         }
     }
 
