@@ -50,10 +50,16 @@ public class ExtensionCallMarkLogicIT extends AbstractMarkLogicIT {
         runner.setProperty(ExtensionCallMarkLogic.REQUIRES_INPUT, "true");
         runner.setProperty(ExtensionCallMarkLogic.PAYLOAD_SOURCE, ExtensionCallMarkLogic.PayloadSources.NONE);
         runner.setProperty(ExtensionCallMarkLogic.PAYLOAD_FORMAT, Format.TEXT.name());
-        runner.setProperty("param:replay", "checkforthis");
+        runner.setProperty("param:replay", "${dynamicParam}");
 
-        runner.enqueue("blah", new HashMap<>());
+        MockFlowFile mockFlowFile = new MockFlowFile(1);
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("dynamicParam", "dynamicValue");
+        mockFlowFile.putAttributes(attributes);
+
+        runner.enqueue(mockFlowFile);
         runner.run(1);
+
         runner.assertQueueEmpty();
         assertEquals(0, runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.FAILURE).size());
         assertEquals(1, runner.getFlowFilesForRelationship(ExtensionCallMarkLogic.SUCCESS).size());
@@ -63,11 +69,11 @@ public class ExtensionCallMarkLogicIT extends AbstractMarkLogicIT {
         MockFlowFile result = results.get(0);
         String resultValue = new String(runner.getContentAsByteArray(result));
 
-        assertEquals("Not clear on why this is the expected value, but this test " +
-                "was failing before due to param:reply being passed as a FlowFile attribute instead of as a " +
-                "ProcessContext property. ExtensionCallMarkLogic only supports checking ProcessContext properties, " +
-                "so the test appeared to be incorrect.",
-                "blahcheckforthis", resultValue);
+        assertEquals("The test 'replay' extension is expected to return the value of the 'replay' parameter, " +
+                        "which is sent via the replay:param property. That property then has an expression, " +
+                        "which is expected to be evaluated against the flowfile attributes, producing the " +
+                        "value 'dynamicvalue'",
+                "dynamicValue", resultValue);
     }
 
     @Test

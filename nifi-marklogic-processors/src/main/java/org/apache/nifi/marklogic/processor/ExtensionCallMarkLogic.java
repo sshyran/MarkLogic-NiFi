@@ -176,24 +176,7 @@ public class ExtensionCallMarkLogic extends AbstractMarkLogicProcessor {
             } else if (!requiresInput) {
                 flowFile = session.create();
             }
-            RequestParameters requestParameters = new RequestParameters();
-            String paramPrefix = "param";
-            List<PropertyDescriptor> parameterProperties = propertiesByPrefix.get(paramPrefix);
-            if (parameterProperties != null) {
-                for (final PropertyDescriptor propertyDesc : parameterProperties) {
-                    String paramName = propertyDesc.getName().substring(paramPrefix.length() + 1);
-                    String paramValue = context.getProperty(propertyDesc).evaluateAttributeExpressions(flowFile).getValue();
-                    PropertyValue separatorProperty = context.getProperty("separator:" + propertyDesc.getName());
-                    if (separatorProperty != null && separatorProperty.getValue() != null && !separatorProperty.getValue().isEmpty()) {
-                        requestParameters.add(
-                                paramName,
-                                paramValue.split(Pattern.quote(separatorProperty.evaluateAttributeExpressions(flowFile).getValue()))
-                        );
-                    } else {
-                        requestParameters.add(paramName, paramValue);
-                    }
-                }
-            }
+
             String method = context.getProperty(METHOD_TYPE).getValue();
             BytesHandle bytesHandle = new BytesHandle();
             String payloadType = context.getProperty(PAYLOAD_SOURCE).getValue();
@@ -217,7 +200,8 @@ public class ExtensionCallMarkLogic extends AbstractMarkLogicProcessor {
                 bytesHandle.withFormat(Format.valueOf(format));
             }
 
-            ServiceResultIterator resultIterator = resourceManager.callService(method, bytesHandle, requestParameters);
+            RequestParameters requestParams = buildRequestParameters(context, flowFile);
+            ServiceResultIterator resultIterator = resourceManager.callService(method, bytesHandle, requestParams);
             if (resultIterator == null || !resultIterator.hasNext()) {
                 transferAndCommit(session, flowFile, SUCCESS);
                 return;
@@ -232,6 +216,33 @@ public class ExtensionCallMarkLogic extends AbstractMarkLogicProcessor {
         } catch (final Throwable t) {
             this.handleThrowable(t, session);
         }
+    }
+
+    /**
+     * Builds a Java Client RequestParameters object based on the dynamic "param:" properties found in the
+     * given ProcessContext. These properties are evaluated against the given FlowFile attributes.
+     *
+     * @param context
+     * @param flowFile
+     * @return
+     */
+    private RequestParameters buildRequestParameters(ProcessContext context, FlowFile flowFile) {
+        RequestParameters requestParameters = new RequestParameters();
+        String paramPrefix = "param";
+        List<PropertyDescriptor> parameterProperties = propertiesByPrefix.get(paramPrefix);
+        if (parameterProperties != null) {
+            for (final PropertyDescriptor propertyDesc : parameterProperties) {
+                String paramName = propertyDesc.getName().substring(paramPrefix.length() + 1);
+                String paramValue = context.getProperty(propertyDesc).evaluateAttributeExpressions(flowFile).getValue();
+                PropertyValue separatorProperty = context.getProperty("separator:" + propertyDesc.getName());
+                if (separatorProperty != null && separatorProperty.getValue() != null && !separatorProperty.getValue().isEmpty()) {
+                    requestParameters.add(paramName, paramValue.split(Pattern.quote(separatorProperty.evaluateAttributeExpressions(flowFile).getValue())));
+                } else {
+                    requestParameters.add(paramName, paramValue);
+                }
+            }
+        }
+        return requestParameters;
     }
 
     protected class ExtensionResourceManager extends ResourceManager {
