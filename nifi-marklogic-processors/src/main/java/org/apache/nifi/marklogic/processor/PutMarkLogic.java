@@ -39,6 +39,7 @@ import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
 import org.apache.nifi.annotation.lifecycle.OnShutdown;
 import org.apache.nifi.annotation.lifecycle.OnStopped;
+import org.apache.nifi.annotation.lifecycle.OnUnscheduled;
 import org.apache.nifi.components.AllowableValue;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.components.PropertyValue;
@@ -534,23 +535,41 @@ public class PutMarkLogic extends AbstractMarkLogicProcessor {
             }
         }
     }
-    /*
-     * Closes the batch likely due to Duplicate URI detected
-     * */
+
+    // Included for testing purposes
     protected void closeWriteBatcher() {
-        if(writeBatcher != null) {
+        if (writeBatcher != null) {
             writeBatcher.flushAndWait();
         }
     }
+
     @OnShutdown
+    public void onShutdown() {
+        getLogger().info("OnShutdown");
+        completeWriteBatcherJob();
+    }
+
     @OnStopped
-    public void completeWriteBatcherJob() {
+    public void onStopped() {
+        getLogger().info("OnStopped");
+        completeWriteBatcherJob();
+    }
+
+    @OnUnscheduled
+    public void onUnscheduled() {
+        getLogger().info("OnUnscheduled");
+        completeWriteBatcherJob();
+    }
+
+    private void completeWriteBatcherJob() {
         if (writeBatcher != null) {
             getLogger().info("Calling flushAndWait on WriteBatcher");
             writeBatcher.flushAndWait();
+            getLogger().info("Awaiting completion");
             writeBatcher.awaitCompletion();
             getLogger().info("Stopping WriteBatcher job");
             dataMovementManager.stopJob(writeBatcher);
+            getLogger().info("WriteBatcher job stopped");
         }
         writeBatcher = null;
         dataMovementManager = null;

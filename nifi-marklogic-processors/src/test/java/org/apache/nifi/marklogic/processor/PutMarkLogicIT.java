@@ -47,7 +47,7 @@ public class PutMarkLogicIT extends AbstractMarkLogicIT{
     }
 
     @Test
-    public void simpleIngest() throws InitializationException {
+    public void simpleIngest() {
         String collection = "PutMarkLogicTest";
         String absolutePath = "/dummyPath/PutMarkLogicTest";
         TestRunner runner = getNewTestRunner(PutMarkLogic.class);
@@ -71,7 +71,7 @@ public class PutMarkLogicIT extends AbstractMarkLogicIT{
     }
 
     @Test
-    public void transformParameters() throws InitializationException, IOException {
+    public void transformParameters() {
         String collection = "transform";
         String transform = "servertransform";
         TestRunner runner = getNewTestRunner(PutMarkLogic.class);
