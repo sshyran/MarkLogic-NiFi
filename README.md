@@ -12,8 +12,10 @@ for information on obtaining the connector, installing it, and using it.
 ## Building and testing the connector
 
 If you'd like to build the MarkLogic NiFi connector from source, you'll first need to 
-[download and install Apache Maven](https://maven.apache.org/) if you do not already have it installed. Then, clone
-this repository locally and run the following command to build the two NAR files:
+[download and install Apache Maven](https://maven.apache.org/) if you do not already have it installed. Additionally, 
+you should use Java 8, which NiFi 1.9.x requires. 
+
+Then, clone this repository locally and run the following command to build the two NAR files:
 
     mvn clean install -DskipTests
 
@@ -40,7 +42,7 @@ developing the connector - please use an IDE such as IntelliJ that is able to ru
 at the same time.
 
 After cloning this repository locally and installing Maven, you can run the tests for the connector by performing the 
-following steps:
+following steps (as noted above, be sure to use Java 8):
 
 1. cd nifi-marklogic-processors
 1. Put your ML admin username/password in gradle-local.properties (a gitignored file, so you'll need to create it)
