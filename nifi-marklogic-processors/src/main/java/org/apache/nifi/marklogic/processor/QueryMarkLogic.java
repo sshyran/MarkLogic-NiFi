@@ -598,10 +598,10 @@ public class QueryMarkLogic extends AbstractMarkLogicProcessor {
                 "Comma-separated list of collections to query from a MarkLogic server");
         public static final String COMBINED_JSON_STR = "Combined Query (JSON)";
         public static final AllowableValue COMBINED_JSON = new AllowableValue(COMBINED_JSON_STR, COMBINED_JSON_STR,
-                "Combine a string or structured query with dynamic query options (Allows JSON serialized cts queries)");
+                "Combine a string or structured query with dynamic query options; also supports JSON serialized CTS queries");
         public static final String COMBINED_XML_STR = "Combined Query (XML)";
         public static final AllowableValue COMBINED_XML = new AllowableValue(COMBINED_XML_STR, COMBINED_XML_STR,
-                "Combine a string or structured query with dynamic query options (Allows XML serialized cts queries)");
+                "Combine a string or structured query with dynamic query options; also supports XML serialized CTS queries");
         public static final String STRING_STR = "String Query";
         public static final AllowableValue STRING = new AllowableValue(STRING_STR, STRING_STR,
                 "A Google-style query string to search documents and metadata.");
