@@ -33,6 +33,12 @@ You can then copy these NAR files into your NiFi installation as described in th
 Running the tests
 =========
 
+Please note that the instructions right below this only run the JUnit 4 tests within this project. The project
+also contains JUnit 5 tests, but the necessary Maven config has not been determined yet to allow for both sets of tests
+to be run when running the Maven "test" task. If you would like to run all of the tests - which is important when 
+developing the connector - please use an IDE such as IntelliJ that is able to run both the JUnit 4 and JUnit 5 tests 
+at the same time.
+
 After cloning this repository locally and installing Maven, you can run the tests for the connector by performing the 
 following steps:
 
@@ -40,7 +46,7 @@ following steps:
 1. Put your ML admin username/password in gradle-local.properties (a gitignored file, so you'll need to create it)
 1. Run ./gradlew -i mldeploy (uses Gradle to deploy a small test application to ML)
 1. cd ..
-1. Run "mvn clean install"
+1. Run "mvn clean test"
 
 You should have output like this:
 
