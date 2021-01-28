@@ -30,9 +30,9 @@ import java.util.*;
 
 @Tags({"MarkLogic", "Data Hub Framework"})
 @InputRequirement(InputRequirement.Requirement.INPUT_ALLOWED)
-@CapabilityDescription("Run a MarkLogic Data Hub flow. This is expected to be run on non-ingestion steps, where data " +
+@CapabilityDescription("Run a MarkLogic Data Hub 5 flow via the Data Hub 5.2.0 Java API. This is expected to be run on non-ingestion steps, where data " +
 	"has already been ingested into MarkLogic. Ingestion steps depend on access to local files, which isn't a common " +
-	"use case for NiFi in production.")
+	"use case for NiFi in production. Does not yet support flows converted for Hub Central usage.")
 public class RunFlowMarkLogic extends AbstractMarkLogicProcessor {
 
 	public static final PropertyDescriptor FINAL_PORT = new PropertyDescriptor.Builder()
