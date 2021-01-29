@@ -21,5 +21,4 @@ org.apache.nifi.marklogic.processor.PutMarkLogic
 org.apache.nifi.marklogic.processor.PutMarkLogicRecord
 org.apache.nifi.marklogic.processor.QueryMarkLogic
 org.apache.nifi.marklogic.processor.QueryRowsMarkLogic
-org.apache.nifi.marklogic.processor.ProvenanceTransformer
 org.apache.nifi.marklogic.processor.RunFlowMarkLogic
